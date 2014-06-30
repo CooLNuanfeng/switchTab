@@ -8,7 +8,7 @@
 .tab_ui .tab_title ul li a{width:20%; height:28px; line-height:28px; color:#fff; float:right; display:block; font-size:12px; text-align:center;}
 .tab_ui .tab_title ul li.active{background:#fcfcfc;}
 .tab_ui .tab_title ul li.active span{color:#00c0ff; font-weight:bold;}
-.tab_ui .tab_title ul li.active a{color:#F36;}
+.tab_ui .tab_title ul li.active a{color:#00c0ff;}
 
 
 .tab_ui .tab_box{width:500px; height:280px; border:1px solid #ccc; border-radius:0 0 10px 10px; background:#fcfcfc; display:none;}

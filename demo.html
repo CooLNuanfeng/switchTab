@@ -6,20 +6,39 @@
 <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet">
 <link href="css/common.css" type="text/css" rel="stylesheet">
 <link href="css/switchTab.css" type="text/css" rel="stylesheet">
+<script src="js/jquery1.7.js"></script>
+<script src="js/switchTab.js"></script>
+<style>
+#div1{margin:20px auto;}
+</style>
+<script>
+$(function(){
+	$('#div1').switchTab({
+		id : 'div1',
+		className : 'tab_ui',
+		width : 500,
+		height :350,
+		count :2
+	})
+})
+</script>
 </head>
 
 <body>
-<div id="div1" class="tab tab_ui" style="width:500px; margin:20px auto">
+<div id="div1"></div>
+<!--
+<div id="div1" class="tab tab_ui">
 	<div class="tab_title">
     	<ul>
-        	<li class="active"><a href="javascript:;" class="fa fa-renren"></a><span>标题一</span></li>
-            <li><a href="javascript:;" class="fa fa-renren"></a><span>标题二</span></li>
-            <li><a href="javascript:;" class="fa fa-renren"></a><span>标题三</span></li>
+        	<li class="active"><a href="javascript:;" class="fa fa-paper-plane"></a><span>标题一</span></li>
+            <li><a href="javascript:;" class="fa fa-paper-plane"></a><span>标题二</span></li>
+            <li><a href="javascript:;" class="fa fa-paper-plane"></a><span>标题三</span></li>
         </ul> 
     </div>
     <div class="tab_box active"></div>
     <div class="tab_box"></div>
     <div class="tab_box"></div>
 </div>
+-->
 </body>
 </html>
