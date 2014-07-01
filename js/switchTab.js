@@ -39,7 +39,8 @@ function SwitchTab(){
 		events : 'mouseover',
 		autoPlay : false,
 		closedTab : true,
-		playTime : 5000
+		playTime : 5000,
+		drag : false
 	}
 }
 
@@ -56,6 +57,7 @@ SwitchTab.prototype = {
 		this.events();
 		this.closedTab();
 		this.autoPlay();
+		this.drag();
 	},
 	
 	createTab : function(){
@@ -98,7 +100,7 @@ SwitchTab.prototype = {
 		})
 	},
 	
-	events : function(n){
+	events : function(){
 		
 		var This = this;
 		
@@ -123,20 +125,52 @@ SwitchTab.prototype = {
 					$('.tab_box').removeClass('active');
 					$(_this).addClass('active');
 					$('.tab_box').eq(This.iNow).addClass('active');
-				},300)
+				},230)
 			});
 			$('.tab_title li').mouseout(function(){
 				clearTimeout(timer);
 			})
 		}
+		
+		if(this.settings.events == 'click'){
+			$('.tab_title li').on('click',function(){
+				var _this = this
+				if(This.autoPlay){
+					This.iNow = $(_this).index();
+				}
+				$('.tab_title li').removeClass('active');
+				$('.tab_box').removeClass('active');
+				$(_this).addClass('active');
+				$('.tab_box').eq(This.iNow).addClass('active');
+			});
+		}
 	},
 	
 	closedTab : function(){
 		
+		var This = this;
+		
 		if(this.settings.closedTab){
 			$('.tab_title li a').click(function(){
+				var delIndex = $(this).parent().index();
+				var len = $('.tab_title li').length
+				//console.log(delIndex,len)
+				if(len ==1){
+					return;
+				}
+				if(This.settings.autoPlay){
+					console.log(len)
+					This.settings.count = len-1;
+				}
+				if(delIndex == len-1){
+					$('.tab_title li').eq(delIndex-1).addClass('active');
+					$('.tab_box').eq(delIndex-1).addClass('active');
+				}else{
+					$('.tab_title li').eq(delIndex+1).addClass('active');
+					$('.tab_box').eq(delIndex+1).addClass('active');
+				}
 				$(this).parent().remove();
-				$('.tab_box').eq($(this).index()).remove();
+				$('.tab_box').eq(delIndex).remove();
 			})
 		}
 		
@@ -164,12 +198,58 @@ SwitchTab.prototype = {
 			},this.settings.playTime)
 		}
 	
+	},
+	
+	drag : function(){
+		var This = this;
+		var btn = true;
+		if(this.settings.drag){
+			
+			$('.tab_title li').on('mousedown',function(e){
+				var _this = this;
+				if(btn){
+					var cloneLi = $(this).clone();
+					var pos_l = $(_this).position().left;
+					$(cloneLi).attr('id','clone').css({
+						position : 'absolute',
+						top : This.settings.tabHeight+10,
+						left : pos_l
+					}).appendTo($('.tab_title ul'));
+					//disX 不能放上边
+					var disX = e.pageX - $(cloneLi).offset().left;
+				}
+				btn = false;
+				$(document).on('mousemove',function(e){
+					$(cloneLi).css({
+						left : e.pageX - disX - $('#'+This.settings.id).offset().left,
+						top : 0,
+						cursor: 'e-resize',
+						zIndex : 5,
+						opacity: 0.8
+					})
+				})
+				$(document).on('mouseup',function(){
+					$(cloneLi).remove();
+					btn = true
+				})
+				
+				return false;
+			})
+		}
+		
 	}
 	
 }
 
 
-
+function dis(obj){
+	var top = 0;
+	while(obj.parentNode){
+		top += obj.offsetTop;
+		obj = obj.parentNode;
+	}
+	return top;
+}
 
 
 
