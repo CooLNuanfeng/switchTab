@@ -151,7 +151,7 @@ SwitchTab.prototype = {
 		var This = this;
 		
 		if(this.settings.closedTab){
-			$('.tab_title li a').click(function(){
+			$('.tab_title li a').on('click',function(){
 				var delIndex = $(this).parent().index();
 				var len = $('.tab_title li').length
 				//console.log(delIndex,len)
@@ -166,6 +166,8 @@ SwitchTab.prototype = {
 					$('.tab_title li').eq(delIndex-1).addClass('active');
 					$('.tab_box').eq(delIndex-1).addClass('active');
 				}else{
+					$('.tab_title li').removeClass('active');
+					$('.tab_box').removeClass('active');
 					$('.tab_title li').eq(delIndex+1).addClass('active');
 					$('.tab_box').eq(delIndex+1).addClass('active');
 				}
