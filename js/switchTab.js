@@ -242,16 +242,6 @@ SwitchTab.prototype = {
 }
 
 
-function dis(obj){
-	var top = 0;
-	while(obj.parentNode){
-		top += obj.offsetTop;
-		obj = obj.parentNode;
-	}
-	return top;
-}
-
-
 
 
 
