@@ -9,7 +9,7 @@
 <script src="js/jquery1.7.js"></script>
 <script src="js/switchTab.js"></script>
 <style>
-#div1{margin:20px auto;}
+#div1{margin:20px auto; height:400px;}
 </style>
 <script>
 $(function(){
@@ -18,7 +18,24 @@ $(function(){
 		className : 'tab_ui',
 		width : 500,
 		height :350,
-		count :2
+		tabWidth:120,
+		tabHeight:28,
+		count :4,
+		title:{
+			tab1 : '选项卡一',
+			tab2 : '选项卡二',
+			tab3 : '选项卡三',
+			tab4 : '选项卡四'
+		},
+		content:{
+			tab1 : $('#tab1').html(),
+			tab2 : $('#tab2').html(),
+			tab3 : $('#tab3').html(),
+			tab4 : $('#tab4').html()
+		},
+		closedTab:true,
+		autoPlay:true,
+		playTime : 1000
 	})
 })
 </script>
@@ -26,6 +43,29 @@ $(function(){
 
 <body>
 <div id="div1"></div>
+<div id="tab1">
+	<div>11111</div>
+    <div>11111</div>
+    <div>11111</div>
+</div>
+<div id="tab2">
+	<div>22222</div>
+    <div>22222</div>
+    <div>22222</div>
+</div>
+
+<div id="tab3">
+	<div>33333</div>
+    <div>33333</div>
+    <div>33333</div>
+</div>
+
+<div id="tab4">
+	<div>44444</div>
+    <div>44444</div>
+    <div>44444</div>
+</div>
+
 <!--
 <div id="div1" class="tab tab_ui">
 	<div class="tab_title">

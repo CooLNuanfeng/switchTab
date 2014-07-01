@@ -1,15 +1,13 @@
 @charset "utf-8";
 /* CSS Document */
-
-.tab_ui .tab_title{height:28px; line-height:28px;}
-
-.tab_ui .tab_title ul li{float:left; width:120px; height:28px; border-radius:8px 8px 0 0; border:1px solid #ddd; background:#00c0ff; cursor:pointer; position:relative; bottom:-1px; border-bottom:0;}
-.tab_ui .tab_title ul li span{width:80%; height:28px; line-height:28px; text-indent:5px; display:block; float:left; font-family:"微软雅黑"; font-size:12px; color:#fff; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
-.tab_ui .tab_title ul li a{width:20%; height:28px; line-height:28px; color:#fff; float:right; display:block; font-size:12px; text-align:center;}
-.tab_ui .tab_title ul li.active{background:#fcfcfc;}
+.tab_ui .tab_title{overflow:hidden; position:relative; bottom:-2px; z-index:1}
+.tab_ui .tab_title ul li{float:left; border-radius:8px 8px 0 0; border:1px solid #ddd; background:#00c0ff; cursor:pointer;}
+.tab_ui .tab_title ul li span{width:80%; height:inherit; line-height:inherit; text-indent:5px; display:block; float:left; font-family:"微软雅黑"; font-size:12px; color:#fff; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.tab_ui .tab_title ul li a{width:20%; height:inherit; line-height:inherit; color:#fff; float:right; display:block; font-size:12px; text-align:center;}
+.tab_ui .tab_title ul li.active{background:#fcfcfc; border-bottom:0}
 .tab_ui .tab_title ul li.active span{color:#00c0ff; font-weight:bold;}
 .tab_ui .tab_title ul li.active a{color:#00c0ff;}
 
 
-.tab_ui .tab_box{width:500px; height:280px; border:1px solid #ccc; border-radius:0 0 10px 10px; background:#fcfcfc; display:none;}
+.tab_ui .tab_box{border:1px solid #ccc; border-radius:0 0 10px 10px; background:#fcfcfc; display:none;}
 .tab_ui .tab_box.active{display:block;}
