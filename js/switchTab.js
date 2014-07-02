@@ -178,12 +178,9 @@ SwitchTab.prototype = {
 		
 	},
 	
-	autoPlay : function(n){
+	autoPlay : function(){
 		
 		var This = this;
-		if(n){
-			this.iNow = n;
-		}
 		
 		if(this.settings.autoPlay){
 			this.autoTimer = setInterval(function(){
@@ -205,10 +202,15 @@ SwitchTab.prototype = {
 	drag : function(){
 		var This = this;
 		var btn = true;
+		var nowLeft =0;
+		var atIndex =0;
+		var startTime = 0;
+		var endTime =0;
 		if(this.settings.drag){
 			
 			$('.tab_title li').on('mousedown',function(e){
 				var _this = this;
+				startTime = new Date().getTime();
 				if(btn){
 					var cloneLi = $(this).clone();
 					var pos_l = $(_this).position().left;
@@ -222,16 +224,43 @@ SwitchTab.prototype = {
 				}
 				btn = false;
 				$(document).on('mousemove',function(e){
+					nowLeft = e.pageX - disX - $('#'+This.settings.id).offset().left;
+					atIndex = 0;
 					$(cloneLi).css({
-						left : e.pageX - disX - $('#'+This.settings.id).offset().left,
+						left : nowLeft,
 						top : 0,
 						cursor: 'e-resize',
 						zIndex : 5,
 						opacity: 0.8
-					})
+					});
+					
+					atIndex = Math.round(nowLeft/This.settings.tabWidth);
+					if(atIndex<0){
+						atIndex = 0;
+					}else if(atIndex>This.settings.count-1){
+						atIndex = This.settings.count-1;
+					}
 				})
 				$(document).on('mouseup',function(){
 					$(cloneLi).remove();
+					$(document).off();
+					endTime = new Date().getTime();
+					if(endTime - startTime >400){
+						var _index = $(_this).index();
+						if(atIndex < _index){
+							$(_this).insertBefore($('.tab_title li').eq(atIndex));
+							$('.tab_box').eq(_index).insertBefore($('.tab_box').eq(atIndex));
+							
+						}else{
+							$(_this).insertAfter($('.tab_title li').eq(atIndex));
+							$('.tab_box').eq(_index).insertAfter($('.tab_box').eq(atIndex))
+						}
+						$('.tab_title li').removeClass('active');
+						$('.tab_box').removeClass('active');
+						$('.tab_title li').eq(atIndex).addClass('active');
+						$('.tab_box').eq(atIndex).addClass('active');
+						This.iNow = atIndex;
+					}
 					btn = true
 				})
 				
