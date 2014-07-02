@@ -14,30 +14,30 @@
 <script>
 $(function(){
 	$('#div1').switchTab({
-		id : 'div1',
-		className : 'tab_ui',
-		width : 500,
-		height :350,
-		tabWidth:120,
-		tabHeight:28,
-		count :4,
-		events: 'mouseover',
-		title:{
+		id : 'div1',  //必选项 需要操作的元素 id
+		className : 'tab_ui',  // 可将自定义样式传入形成不同风格的选项卡 本例在 .tab_ui下设计的样式,可自行补充
+		width : 500,  // 设置选项卡宽度 默认 500
+		height :350, // 设置选项卡高度，默认 auto
+		tabWidth:120, // 设置选项卡选项标题宽度， 默认120
+		tabHeight:28, //设置选项卡选项标题高度， 默认28
+		count :4,   // 设置选项卡 数量
+		events: 'mouseover',  // 设置触发切换事件，默认为 mouseover，只做了两种事件另一种为click事件
+		title:{               // 设置选项卡标题内容
 			tab1 : '选项卡一',
 			tab2 : '选项卡二',
 			tab3 : '选项卡三',
 			tab4 : '选项卡四'
 		},
-		content:{
+		content:{            // 设置每个选项卡内容
 			tab1 : $('#tab1').html(),
 			tab2 : $('#tab2').html(),
 			tab3 : $('#tab3').html(),
 			tab4 : $('#tab4').html()
 		},
-		closedTab:true,
-		drag : true,
-		autoPlay:true,
-		playTime :5000
+		closedTab:true,  // 设置是否具有关闭部分选项卡标签功能，默认开启
+		drag : true,     //  设置是否能够拖拽调整选项卡位置，默认为false关闭
+		autoPlay:true,  // 设置是否能够自动切换，默认为fasle
+		playTime :5000  //设置自动切换时间，与autoplay配合使用，默认为 5000ms
 	})
 })
 </script>
