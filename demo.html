@@ -38,6 +38,26 @@ $(function(){
 		drag : true,     //  设置是否能够拖拽调整选项卡位置，默认为false关闭
 		autoPlay:true,  // 设置是否能够自动切换，默认为fasle
 		playTime :5000  //设置自动切换时间，与autoplay配合使用，默认为 5000ms
+	});
+	
+	$('#div2').switchTab({
+		id : 'div2',
+		className : 'tab_ui',
+		width: 300,
+		height:200,
+		count :2,
+		title:{
+			tab1:'标题一',
+			tab2:'标题二'
+		},
+		content:{           
+			tab1 : $('#tab1').html(),
+			tab2 : $('#tab2').html(),
+		},
+		closeTab : true,
+		drag:true,
+		autoPlay:true,
+		playTime:1000
 	})
 })
 </script>
@@ -45,6 +65,7 @@ $(function(){
 
 <body>
 <div id="div1"></div>
+<div id='div2'></div>
 <div id="tab1">
 	<div>11111</div>
     <div>11111</div>

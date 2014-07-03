@@ -16,6 +16,7 @@ function SwitchTab(){
 	
 	this.iNow = 0;
 	this.autoTimer = null;
+	this.$switchTab = null;
 	
 	this.settings = {
 		id : '', 
@@ -52,6 +53,7 @@ SwitchTab.prototype = {
 		
 		$.extend(this.settings,options);
 		
+		this.$switchTab = $('#'+this.settings.id)
 		this.createTab();
 		this.tabSize();
 		this.events();
@@ -84,16 +86,16 @@ SwitchTab.prototype = {
 		
 		var html = '<div class="tab_title"><ul>'+titleList+'</ul></div>'+boxDiv
 		
-		$('#'+this.settings.id).addClass('tab '+this.settings.className).html(html)
+		this.$switchTab.addClass('tab '+this.settings.className).html(html)
 		
 	},
 	
 	tabSize : function(){
 		
-		$('#'+this.settings.id).css({
+		this.$switchTab.css({
 			width : this.settings.width
 			}).find('.tab_box').css({ height : this.settings.height})
-		$('.tab_title li').css({
+		this.$switchTab.find('.tab_title li').css({
 			width: this.settings.tabWidth,
 			height : this.settings.tabHeight,
 			lineHeight :this.settings.tabHeight+'px'
@@ -105,43 +107,43 @@ SwitchTab.prototype = {
 		var This = this;
 		
 		if(this.settings.autoPlay){
-			$('#'+this.settings.id).mouseover(function(){
+			this.$switchTab.mouseover(function(){
 				clearInterval(This.autoTimer)
 			})
-			$('#'+this.settings.id).mouseout(function(){
+			this.$switchTab.mouseout(function(){
 				This.autoPlay();
 			})
 		}
 		
 		if(this.settings.events == 'mouseover'){
 			var timer = null;
-			$('.tab_title li').mouseover(function(){
+			this.$switchTab.find('.tab_title li').mouseover(function(){
 				var _this = this
 				if(This.autoPlay){
 					This.iNow = $(_this).index();
 				}
 				timer = setTimeout(function(){
-					$('.tab_title li').removeClass('active');
-					$('.tab_box').removeClass('active');
+					This.$switchTab.find('.tab_title li').removeClass('active');
+					This.$switchTab.find('.tab_box').removeClass('active');
 					$(_this).addClass('active');
-					$('.tab_box').eq(This.iNow).addClass('active');
+					This.$switchTab.find('.tab_box').eq(This.iNow).addClass('active');
 				},230)
 			});
-			$('.tab_title li').mouseout(function(){
+			This.$switchTab.find('.tab_title li').mouseout(function(){
 				clearTimeout(timer);
 			})
 		}
 		
 		if(this.settings.events == 'click'){
-			$('.tab_title li').on('click',function(){
+			This.$switchTab.find('.tab_title li').on('click',function(){
 				var _this = this
 				if(This.autoPlay){
 					This.iNow = $(_this).index();
 				}
-				$('.tab_title li').removeClass('active');
-				$('.tab_box').removeClass('active');
+				This.$switchTab.find('.tab_title li').removeClass('active');
+				This.$switchTab.find('.tab_box').removeClass('active');
 				$(_this).addClass('active');
-				$('.tab_box').eq(This.iNow).addClass('active');
+				This.$switchTab.find('.tab_box').eq(This.iNow).addClass('active');
 			});
 		}
 	},
@@ -151,9 +153,9 @@ SwitchTab.prototype = {
 		var This = this;
 		
 		if(this.settings.closedTab){
-			$('.tab_title li a').on('click',function(){
+			This.$switchTab.find('.tab_title li a').on('click',function(){
 				var delIndex = $(this).parent().index();
-				var len = $('.tab_title li').length
+				var len = This.$switchTab.find('.tab_title li').length
 				//console.log(delIndex,len)
 				if(len ==1){
 					return;
@@ -163,16 +165,16 @@ SwitchTab.prototype = {
 					This.settings.count = len-1;
 				}
 				if(delIndex == len-1){
-					$('.tab_title li').eq(delIndex-1).addClass('active');
-					$('.tab_box').eq(delIndex-1).addClass('active');
+					This.$switchTab.find('.tab_title li').eq(delIndex-1).addClass('active');
+					This.$switchTab.find('.tab_box').eq(delIndex-1).addClass('active');
 				}else{
-					$('.tab_title li').removeClass('active');
-					$('.tab_box').removeClass('active');
-					$('.tab_title li').eq(delIndex+1).addClass('active');
-					$('.tab_box').eq(delIndex+1).addClass('active');
+					This.$switchTab.find('.tab_title li').removeClass('active');
+					This.$switchTab.find('.tab_box').removeClass('active');
+					This.$switchTab.find('.tab_title li').eq(delIndex+1).addClass('active');
+					This.$switchTab.find('.tab_box').eq(delIndex+1).addClass('active');
 				}
 				$(this).parent().remove();
-				$('.tab_box').eq(delIndex).remove();
+				This.$switchTab.find('.tab_box').eq(delIndex).remove();
 			})
 		}
 		
@@ -189,10 +191,10 @@ SwitchTab.prototype = {
 					This.iNow = 0;
 				}
 				
-				$('.tab_title li').removeClass('active');
-				$('.tab_box').removeClass('active');
-				$('.tab_title li').eq(This.iNow).addClass('active');
-				$('.tab_box').eq(This.iNow).addClass('active')
+				This.$switchTab.find('.tab_title li').removeClass('active');
+				This.$switchTab.find('.tab_box').removeClass('active');
+				This.$switchTab.find('.tab_title li').eq(This.iNow).addClass('active');
+				This.$switchTab.find('.tab_box').eq(This.iNow).addClass('active')
 				
 			},this.settings.playTime)
 		}
@@ -208,7 +210,7 @@ SwitchTab.prototype = {
 		var endTime =0;
 		if(this.settings.drag){
 			
-			$('.tab_title li').on('mousedown',function(e){
+			This.$switchTab.find('.tab_title li').on('mousedown',function(e){
 				var _this = this;
 				startTime = new Date().getTime();
 				if(btn){
@@ -218,13 +220,13 @@ SwitchTab.prototype = {
 						position : 'absolute',
 						top : This.settings.tabHeight+10,
 						left : pos_l
-					}).appendTo($('.tab_title ul'));
+					}).appendTo(This.$switchTab.find('.tab_title ul'));
 					//disX 不能放上边
 					var disX = e.pageX - $(cloneLi).offset().left;
 				}
 				btn = false;
 				$(document).on('mousemove',function(e){
-					nowLeft = e.pageX - disX - $('#'+This.settings.id).offset().left;
+					nowLeft = e.pageX - disX - This.$switchTab.offset().left;
 					atIndex = 0;
 					$(cloneLi).css({
 						left : nowLeft,
@@ -248,17 +250,17 @@ SwitchTab.prototype = {
 					if(endTime - startTime >400){
 						var _index = $(_this).index();
 						if(atIndex < _index){
-							$(_this).insertBefore($('.tab_title li').eq(atIndex));
-							$('.tab_box').eq(_index).insertBefore($('.tab_box').eq(atIndex));
+							$(_this).insertBefore(This.$switchTab.find('.tab_title li').eq(atIndex));
+							This.$switchTab.find('.tab_box').eq(_index).insertBefore(This.$switchTab.find('.tab_box').eq(atIndex));
 							
 						}else{
-							$(_this).insertAfter($('.tab_title li').eq(atIndex));
-							$('.tab_box').eq(_index).insertAfter($('.tab_box').eq(atIndex))
+							$(_this).insertAfter(This.$switchTab.find('.tab_title li').eq(atIndex));
+							This.$switchTab.find('.tab_box').eq(_index).insertAfter(This.$switchTab.find('.tab_box').eq(atIndex))
 						}
-						$('.tab_title li').removeClass('active');
-						$('.tab_box').removeClass('active');
-						$('.tab_title li').eq(atIndex).addClass('active');
-						$('.tab_box').eq(atIndex).addClass('active');
+						This.$switchTab.find('.tab_title li').removeClass('active');
+						This.$switchTab.find('.tab_box').removeClass('active');
+						This.$switchTab.find('.tab_title li').eq(atIndex).addClass('active');
+						This.$switchTab.find('.tab_box').eq(atIndex).addClass('active');
 						This.iNow = atIndex;
 					}
 					btn = true
